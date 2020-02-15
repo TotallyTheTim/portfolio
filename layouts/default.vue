@@ -23,9 +23,10 @@
 
 <style lang="scss">
   @import '~/styles/colors.scss';
+  @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
 
   html {
-    font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: Roboto, sans-serif;
     font-size: 16px;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -50,12 +51,15 @@
     flex-direction: column;
     align-items: center;
     flex: 0 0 62px;
-    background: transparentize(lighten($background,50%),.75);
+    background: transparentize(darken($alternative,15%), .25);
   }
   .nav-link{
-    margin: 16px 0;
+    margin: 4px 0;
     padding: 4px;
     display: block;
+    &.nuxt-link-exact-active svg path{
+      fill: $secondary;
+    }
     &:hover svg path{
       fill: $secondary;
     }
@@ -63,7 +67,7 @@
       width: 24px;
       height: 24px;
       path{
-        fill: $complimentary;
+        fill: $alternative;
 
       }
     }
