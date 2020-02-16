@@ -28,6 +28,10 @@
 <style lang="scss">
     @import '~/styles/colors.scss';
 
+    .introduction-smaller {
+        flex: 0 0 50%;
+    }
+
     .container {
         flex: 1;
         margin: 0 auto;
@@ -36,25 +40,29 @@
         justify-content: space-around;
         align-items: center;
     }
-    .logo{
+
+    .logo {
         height: 100%;
         flex: 1 0 40%;
     }
 
-    .introduction{
+    .introduction {
         padding: 52px;
         flex: 0 0 60%;
-        .title{
+
+        .title {
             color: $primary;
             font-size: 72px;
         }
-        .subtitle{
+
+        .subtitle {
             margin: 42px 0;
             font-weight: 200;
-            color: $alternative;
+            color: $complimentary;
             font-size: 42px;
         }
-        a, button{
+
+        a, button {
             display: block;
             width: max-content;
             min-width: 300px;

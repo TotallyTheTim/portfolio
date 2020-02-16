@@ -61,7 +61,7 @@
       fill: $secondary;
     }
     &:hover svg path{
-      fill: $secondary;
+      fill: desaturate($secondary,80%);
     }
     svg{
       width: 24px;
