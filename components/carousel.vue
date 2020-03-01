@@ -1,56 +1,44 @@
 <template>
-    <div class="carousel">
+    <div class="carousel" :class="{'alternative-position' : active}">
         <template v-for="(item,index) in items">
-            <div v-on:click="currentIndex = index"  class="item" :class="{
+            <div v-on:click="currentIndex = index" class="item" :class="{
             'active': index === currentIndex,
             'next-active': index === currentIndex+1,
             'prev-active': index === currentIndex-1,
             'prev-far-active': index < currentIndex-1,
             'next-far-active': index > currentIndex+1
             }">
-                <!--{{item.title}}-->
+                <div class="item-inner">
+                    <div class="item-background" :style="{ backgroundImage: 'url(' + require(`@/assets/projects/${item.img}`) + ')' }"></div>
+                </div>
             </div>
         </template>
     </div>
 </template>
 
 <script>
-    export default{
-        data(){
-            return{
-                items: [
-                    {
-                        title: "Test Title",
-                        img: "placeholder.png",
-                        text: "Placeholder text because who doesn't need placeholder text"
-                    },
-                    {
-                        title: "Test Title 2",
-                        img: "placeholder.png",
-                        text: "Placeholder text because who doesn't need placeholder text"
-                    },
-                    {
-                        title: "Test Title 3",
-                        img: "placeholder.png",
-                        text: "Placeholder text because who doesn't need placeholder text"
-                    },
-                    {
-                        title: "Test Title 4",
-                        img: "placeholder.png",
-                        text: "Placeholder text because who doesn't need placeholder text"
-                    },
-                    {
-                        title: "Test Title 5",
-                        img: "placeholder.png",
-                        text: "Placeholder text because who doesn't need placeholder text"
-                    }
-                ],
+    export default {
+        props: {
+            items: {
+                type: Array,
+                required: true,
+            },
+            active: {
+                type: Boolean,
+                required: true,
+            }
+        },
+        data() {
+            return {
                 currentIndex: 1,
             }
         },
-        methods:{
-            setIndex(index){
+        methods: {
+            setIndex(index) {
                 this.currentIndex = index;
+            },
+            getUrl(url){
+                // return require('/assets/projects/${url}')
             }
         }
     }
@@ -58,28 +46,34 @@
 
 <style lang="scss">
     @import '~/styles/colors.scss';
-    .carousel{
-        width: calc(100% - 64px);
+
+    .carousel {
+        max-width: calc(100% - 64px);
         height: 100%;
+        flex: 0 0 100%;
         position: relative;
         overflow: hidden;
-        &:after, &:before{
-        content: '';
+        justify-self: flex-end;
+        &.alternative-position{
+            /*margin-left: auto;*/
+        }
+        &:after, &:before {
+            content: '';
             pointer-events: none;
             position: absolute;
             z-index: 1;
             width: 100%;
             height: 200px;
         }
-        &:after{
+        &:after {
             background-image: linear-gradient(180deg, transparent, $background 80%);
             bottom: 0;
         }
-        &:before{
+        &:before {
             background-image: linear-gradient(0deg, transparent, $background 80%);
             top: 0;
         }
-        .item{
+        .item {
             width: 80%;
             position: absolute;
             left: 50%;
@@ -87,21 +81,33 @@
             background: $secondary;
             transition: top .3s ease-in-out;
             transform: translate(-50%, -50%);
-            &.active{
+            &.active {
                 top: 50%;
             }
-            &.prev-active{
+            &.prev-active {
                 top: 0;
             }
-            &.next-active{
+            &.next-active {
                 top: 100%;
             }
-            &.next-far-active{
+            &.next-far-active {
                 top: 150%
             }
-            &.prev-far-active{
+            &.prev-far-active {
                 top: -50%
             }
+        }
+        .item-inner{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .item-background{
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
         }
     }
 </style>
