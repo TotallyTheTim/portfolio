@@ -1,7 +1,7 @@
 <template>
     <div class="carousel" :class="{'alternative-position' : active}">
         <template v-for="(item,index) in items">
-            <div v-on:click="currentIndex = index" class="item" :class="{
+            <div @click="setIndex(index)" class="item" :class="{
             'active': index === currentIndex,
             'next-active': index === currentIndex+1,
             'prev-active': index === currentIndex-1,
@@ -9,7 +9,8 @@
             'next-far-active': index > currentIndex+1
             }">
                 <div class="item-inner">
-                    <div class="item-background" :style="{ backgroundImage: 'url(' + require(`@/assets/projects/${item.img}`) + ')' }"></div>
+                    <div class="item-background"
+                         :style="{ backgroundImage: 'url(' + require(`@/assets/projects/${item.img}`) + ')' }"></div>
                 </div>
             </div>
         </template>
@@ -33,11 +34,18 @@
                 currentIndex: 1,
             }
         },
+        mounted() {
+            this.updateParentIndex();
+        },
         methods: {
             setIndex(index) {
                 this.currentIndex = index;
+                this.updateParentIndex();
             },
-            getUrl(url){
+            updateParentIndex() {
+                this.$emit('setIndex', this.currentIndex);
+            },
+            getUrl(url) {
                 // return require('/assets/projects/${url}')
             }
         }
@@ -54,9 +62,14 @@
         position: relative;
         overflow: hidden;
         justify-self: flex-end;
-        &.alternative-position{
-            /*margin-left: auto;*/
+        transition: max-width .3s ease-in-out, margin-left .3s ease-in-out, flex .3s ease-in-out;
+
+        &.alternative-position {
+            max-width: calc(50% - 32px);
+            margin-left: 48px;
+            flex: 0 0 50%;
         }
+
         &:after, &:before {
             content: '';
             pointer-events: none;
@@ -65,14 +78,17 @@
             width: 100%;
             height: 200px;
         }
+
         &:after {
             background-image: linear-gradient(180deg, transparent, $background 80%);
             bottom: 0;
         }
+
         &:before {
             background-image: linear-gradient(0deg, transparent, $background 80%);
             top: 0;
         }
+
         .item {
             width: 80%;
             position: absolute;
@@ -81,28 +97,35 @@
             background: $secondary;
             transition: top .3s ease-in-out;
             transform: translate(-50%, -50%);
+
             &.active {
                 top: 50%;
             }
+
             &.prev-active {
                 top: 0;
             }
+
             &.next-active {
                 top: 100%;
             }
+
             &.next-far-active {
                 top: 150%
             }
+
             &.prev-far-active {
                 top: -50%
             }
         }
-        .item-inner{
+
+        .item-inner {
             width: 100%;
             height: 100%;
             position: relative;
         }
-        .item-background{
+
+        .item-background {
             background-size: cover;
             background-position: center;
             width: 100%;

@@ -28,9 +28,6 @@
 <style lang="scss">
     @import '~/styles/colors.scss';
 
-    .introduction-smaller {
-        flex: 0 0 50%;
-    }
 
     .container {
         flex: 1;
@@ -49,6 +46,10 @@
     .introduction {
         padding: 52px;
         flex: 0 0 60%;
+
+        &.introduction-smaller {
+            flex: 0 0 50%;
+        }
 
         .title {
             color: $primary;
